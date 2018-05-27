@@ -9,6 +9,6 @@ import java.util.List;
 
 public interface ApartmentRepository extends JpaRepository<Apartment, Long> {
 
-    @Query("SELECT p FROM Apartment p WHERE LOWER(p.owner_id) = LOWER(SELECT u.id from User u LOWER(u.login) = LOWER(:ownerName))")
+    @Query("SELECT p FROM Apartment p WHERE p.owner = (SELECT u from User u WHERE LOWER(u.login) = LOWER(:ownerName))")
     List<Apartment> getApartmentsByUserName(@Param("ownerName")String ownerName);
 }

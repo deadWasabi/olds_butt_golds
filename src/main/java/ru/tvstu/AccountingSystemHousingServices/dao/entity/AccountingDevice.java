@@ -7,12 +7,14 @@ import org.springframework.data.annotation.LastModifiedDate;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
+import java.util.List;
+import java.util.UUID;
 
 @Entity
 @Table(name = "accounting_device")
 @JsonIgnoreProperties(value = {"createdAt", "updatedAt"},
         allowGetters = true)
-public class AccouningDevice {
+public class AccountingDevice {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -21,9 +23,6 @@ public class AccouningDevice {
     @NotNull
     private String serialNumber;
 
-    @Enumerated(EnumType.STRING)
-    private ServiceType serviceType;
-
     private String mark;
 
     private String model;
@@ -31,6 +30,21 @@ public class AccouningDevice {
     private Date installationDate;
 
     private Date verificationDate;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="owner_id", nullable=false)
+    private User owner;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="apartment_id", nullable=false)
+    private Apartment apartment;
+
+    @Column(name = "device_uuid", length = 100, unique = true)
+    @NotNull
+    private UUID deviceUUID;
+
+    @OneToMany(mappedBy = "accountingDevice", fetch = FetchType.LAZY)
+    private List<AccountingService> accountingServices;
 
     @Column(nullable = false, updatable = false)
     @Temporal(TemporalType.TIMESTAMP)
@@ -41,11 +55,6 @@ public class AccouningDevice {
     @Temporal(TemporalType.TIMESTAMP)
     @LastModifiedDate
     private Date updatedAt = new Date();
-
-    @NotNull
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="apartment_id", nullable=false)
-    private Apartment apartment;
 
     public Long getId() {
         return id;
@@ -61,14 +70,6 @@ public class AccouningDevice {
 
     public void setSerialNumber(String serialNumber) {
         this.serialNumber = serialNumber;
-    }
-
-    public ServiceType getServiceType() {
-        return serviceType;
-    }
-
-    public void setServiceType(ServiceType serviceType) {
-        this.serviceType = serviceType;
     }
 
     public String getMark() {
@@ -125,5 +126,29 @@ public class AccouningDevice {
 
     public void setApartment(Apartment apartment) {
         this.apartment = apartment;
+    }
+
+    public User getOwner() {
+        return owner;
+    }
+
+    public void setOwner(User owner) {
+        this.owner = owner;
+    }
+
+    public UUID getDeviceUUID() {
+        return deviceUUID;
+    }
+
+    public void setDeviceUUID(UUID deviceUUID) {
+        this.deviceUUID = deviceUUID;
+    }
+
+    public List<AccountingService> getAccountingServices() {
+        return accountingServices;
+    }
+
+    public void setAccountingServices(List<AccountingService> accountingServices) {
+        this.accountingServices = accountingServices;
     }
 }

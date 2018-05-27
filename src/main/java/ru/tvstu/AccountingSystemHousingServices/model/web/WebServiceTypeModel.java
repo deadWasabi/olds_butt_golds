@@ -1,31 +1,20 @@
-package ru.tvstu.AccountingSystemHousingServices.dao.entity;
+package ru.tvstu.AccountingSystemHousingServices.model.web;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import java.util.List;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import ru.tvstu.AccountingSystemHousingServices.dao.entity.ServiceTypeEnum;
 
-@Entity
-@Table(name = "service_type")
-public class ServiceType {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+@JsonInclude(JsonInclude.Include.NON_NULL)
+public class WebServiceTypeModel {
+
     private Long id;
 
-    @NotNull
     private String name;
 
-    @NotNull
     private String utilsOfMeasurements;
 
     private ServiceTypeEnum serviceTypeEnum;
 
     private String description;
-
-    @OneToMany(mappedBy = "serviceType", fetch = FetchType.LAZY)
-    private List<AccountingService> accountingService;
-
-    @OneToMany(mappedBy = "serviceType", fetch = FetchType.LAZY)
-    private List<ServiceCost> serviceCosts;
 
     public Long getId() {
         return id;
@@ -65,21 +54,5 @@ public class ServiceType {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public List<AccountingService> getAccountingService() {
-        return accountingService;
-    }
-
-    public void setAccountingService(List<AccountingService> accountingService) {
-        this.accountingService = accountingService;
-    }
-
-    public List<ServiceCost> getServiceCosts() {
-        return serviceCosts;
-    }
-
-    public void setServiceCosts(List<ServiceCost> serviceCosts) {
-        this.serviceCosts = serviceCosts;
     }
 }

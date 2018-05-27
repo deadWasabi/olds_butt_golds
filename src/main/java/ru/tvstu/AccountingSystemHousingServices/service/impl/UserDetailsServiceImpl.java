@@ -2,12 +2,14 @@ package ru.tvstu.AccountingSystemHousingServices.service.impl;
 
 import org.dozer.DozerBeanMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
+import ru.tvstu.AccountingSystemHousingServices.customException.ObjectNotFoundExeption;
 import ru.tvstu.AccountingSystemHousingServices.customException.UserAlreadyExistsException;
 import ru.tvstu.AccountingSystemHousingServices.dao.entity.User;
 import ru.tvstu.AccountingSystemHousingServices.dao.entity.UserInfo;
@@ -135,5 +137,12 @@ public class UserDetailsServiceImpl implements UserDetailsService, UserService {
         return userInfo;
     }
 
-
+    @Override
+    public User getCurrentUser() {
+        String userName = SecurityContextHolder.getContext().getAuthentication().getName();
+        if(userName  == null) {
+            throw new  ObjectNotFoundExeption("User not found");
+        }
+        return userRepository.findByUserName(userName);
+    }
 }

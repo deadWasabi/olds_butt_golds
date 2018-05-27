@@ -48,6 +48,9 @@ public class User {
     @OneToMany(mappedBy = "owner", fetch = FetchType.LAZY)
     private List<Apartment> apartments;
 
+    @OneToMany(mappedBy = "owner", fetch = FetchType.LAZY)
+    private List<AccountingDevice> accountingDevices;
+
     public Long getId() {
         return id;
     }
@@ -118,5 +121,21 @@ public class User {
 
     public void setUserInfo(UserInfo userInfo) {
         this.userInfo = userInfo;
+    }
+
+    public List<Apartment> getApartments() {
+        return apartments;
+    }
+
+    public void setApartments(List<Apartment> apartments) {
+        this.apartments = apartments;
+    }
+
+    public List<AccountingDevice> getAccountingDevices() {
+        return accountingDevices;
+    }
+
+    public void setAccountingDevices(List<AccountingDevice> accountingDevices) {
+        this.accountingDevices = accountingDevices;
     }
 }

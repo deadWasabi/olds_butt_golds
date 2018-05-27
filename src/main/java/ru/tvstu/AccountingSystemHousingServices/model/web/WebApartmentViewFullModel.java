@@ -1,5 +1,11 @@
 package ru.tvstu.AccountingSystemHousingServices.model.web;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
+import java.util.ArrayList;
+import java.util.List;
+
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class WebApartmentViewFullModel extends WebApartmentViewModel {
     private Integer square;
 
@@ -8,6 +14,8 @@ public class WebApartmentViewFullModel extends WebApartmentViewModel {
     private Integer numberResidents;
 
     private Integer numberBeneficiaries;
+
+    private List<WebAccountingDeviceModel> webAccountingDeviceModelList = new ArrayList<>();
 
     public Integer getSquare() {
         return square;
@@ -39,5 +47,13 @@ public class WebApartmentViewFullModel extends WebApartmentViewModel {
 
     public void setNumberBeneficiaries(Integer numberBeneficiaries) {
         this.numberBeneficiaries = numberBeneficiaries;
+    }
+
+    public List<WebAccountingDeviceModel> getWebAccountingDeviceModelList() {
+        return webAccountingDeviceModelList;
+    }
+
+    public void setWebAccountingDeviceModelList(List<WebAccountingDeviceModel> webAccountingDeviceModelList) {
+        this.webAccountingDeviceModelList = webAccountingDeviceModelList;
     }
 }

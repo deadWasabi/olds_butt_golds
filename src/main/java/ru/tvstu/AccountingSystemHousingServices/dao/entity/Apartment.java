@@ -46,8 +46,11 @@ public class Apartment {
     @LastModifiedDate
     private Date updatedAt = new Date();
 
-    @OneToMany(mappedBy = "owner", fetch = FetchType.LAZY)
-    private List<AccouningDevice> accouningDevice;
+    @OneToMany(mappedBy = "apartment", fetch = FetchType.LAZY)
+    private List<AccountingDevice> accountingDevice;
+
+    @OneToMany(mappedBy = "apartment", fetch = FetchType.LAZY)
+    private List<ServiceCost> serviceCosts;
 
     public Long getId() {
         return id;
@@ -129,11 +132,19 @@ public class Apartment {
         this.updatedAt = updatedAt;
     }
 
-    public List<AccouningDevice> getAccouningDevice() {
-        return accouningDevice;
+    public List<AccountingDevice> getAccountingDevice() {
+        return accountingDevice;
     }
 
-    public void setAccouningDevice(List<AccouningDevice> accouningDevice) {
-        this.accouningDevice = accouningDevice;
+    public void setAccountingDevice(List<AccountingDevice> accountingDevice) {
+        this.accountingDevice = accountingDevice;
+    }
+
+    public List<ServiceCost> getServiceCosts() {
+        return serviceCosts;
+    }
+
+    public void setServiceCosts(List<ServiceCost> serviceCosts) {
+        this.serviceCosts = serviceCosts;
     }
 }

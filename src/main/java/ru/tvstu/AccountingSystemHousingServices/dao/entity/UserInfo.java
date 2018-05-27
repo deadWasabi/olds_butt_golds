@@ -88,8 +88,7 @@ public class UserInfo {
     @LastModifiedDate
     private Date updatedAt = new Date();
 
-    @OneToOne(cascade = CascadeType.ALL,
-            fetch = FetchType.LAZY)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @MapsId
     private User user;
 
