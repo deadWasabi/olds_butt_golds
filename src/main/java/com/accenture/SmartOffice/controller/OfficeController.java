@@ -23,33 +23,25 @@ public class OfficeController {
     @ResponseBody
     @GetMapping(value = DETAILS)
     public WebOfficeModel getOfficeDetail() {
-//      TODO
-//          return officeService.getOfficeDetail();
-        throw new UnsupportedOperationException();
+        return officeService.getOfficeDetail();
     }
 
     @ResponseBody
     @PostMapping(value = SET_USER)
     public void setUserWorkspace(@RequestBody WebUserWorkspaceModel webUserWorkspaceModel) {
-//      TODO
-//          officeService.setUserWorkspace(webUserWorkspaceModel);
-        throw new UnsupportedOperationException();
+        officeService.setUserWorkspace(webUserWorkspaceModel);
     }
 
     @ResponseBody
     @PostMapping(value = DELETE_USER)
-    public void deleteUserWorkspace(@RequestBody WebUserWorkspaceModel webUserWorkspaceModel) {
-//      TODO
-//          officeService.deleteUserWorkspace(webUserWorkspaceModel);
-        throw new UnsupportedOperationException();
+    public void deleteUserWorkspace(@PathVariable Long userWorkspaceId) {
+        officeService.deleteUserWorkspace(userWorkspaceId);
     }
 
     @ResponseBody
     @PostMapping(value = SWAP_USERS)
     public void swapUsers(@RequestBody WebUserSwapModel webUserSwapModel) {
-//      TODO
-//          officeService.swapUsers(webUserSwapModel);
-        throw new UnsupportedOperationException();
+        officeService.swapUsers(webUserSwapModel);
     }
 
 }

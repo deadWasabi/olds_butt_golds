@@ -40,8 +40,7 @@ public class UserContoller {
 
     @ResponseBody
     @GetMapping(value = DELETE_USER)
-    public WebUserInfoModel deleteUser(@RequestBody WebUserInfoModel webUserInfoModel) {
-        //TODO
-        throw new UnsupportedOperationException();
+    public void deleteUser(@PathVariable Long userId) {
+        userService.deleteUser(userId);
     }
 }

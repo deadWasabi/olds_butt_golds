@@ -21,32 +21,24 @@ public class BookingController {
     @ResponseBody
     @PostMapping(value = BOOKING)
     public WebBookingModel bookRoom(@RequestBody WebBookingModel webBookingModel) {
-        //TODO
-//        return bookingService.bookRoom(webBookingModel);
-        throw new UnsupportedOperationException();
+        return bookingService.bookRoom(webBookingModel);
     }
 
     @ResponseBody
     @PostMapping(value = DELETE_BOOKING)
-    public WebBookingModel deleteBooking(@PathVariable Long bookingId) {
-        //TODO
-//        return bookingService.deleteBooking(bookingId);
-        throw new UnsupportedOperationException();
+    public void deleteBooking(@PathVariable Long bookingId) {
+        bookingService.deleteBooking(bookingId);
     }
 
     @ResponseBody
     @PostMapping(value = EDIT_BOOKING)
     public WebBookingModel editBooking(@RequestBody WebBookingModel webBookingModel) {
-        //TODO
-//        return bookingService.editBooking(webBookingModel);
-        throw new UnsupportedOperationException();
+        return bookingService.editBooking(webBookingModel);
     }
 
     @ResponseBody
     @GetMapping(value = BOOKING_PLAN)
     public WebBookingModel getBookingPlan(@PathVariable Long roomId) {
-        //TODO
-//        return bookingService.getBookingPlan(roomId);
-        throw new UnsupportedOperationException();
+        return bookingService.getBookingPlan(roomId);
     }
 }

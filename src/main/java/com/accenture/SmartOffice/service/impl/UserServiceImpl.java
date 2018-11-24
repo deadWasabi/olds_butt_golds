@@ -24,7 +24,7 @@ import com.accenture.SmartOffice.service.UserService;
 import static java.util.Collections.emptyList;
 
 @Service
-public class UserDetailsServiceImpl implements UserDetailsService, UserService {
+public class UserServiceImpl implements UserService {
 
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -37,17 +37,6 @@ public class UserDetailsServiceImpl implements UserDetailsService, UserService {
 
     @Autowired
     private UserInfoRepository userInfoRepository;
-
-    @Override
-    public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
-        User user = userRepository.findByUserName(userName);
-
-        if (user == null) {
-            throw new UsernameNotFoundException(userName);
-        }
-        return new org.springframework.security.core.userdetails.User(user.getLogin(), user.getHashPassword(), emptyList());
-    }
-
 
     @Override
     public WebUserModel signUp(WebUserCredentialModel webRegisterUserModel) {
@@ -144,5 +133,10 @@ public class UserDetailsServiceImpl implements UserDetailsService, UserService {
             throw new ObjectNotFoundExeption("User not found");
         }
         return userRepository.findByUserName(userName);
+    }
+
+    @Override
+    public void deleteUser(Long userId){
+        //TODO
     }
 }

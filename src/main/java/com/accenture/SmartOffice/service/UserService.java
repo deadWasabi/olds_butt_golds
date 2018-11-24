@@ -13,4 +13,7 @@ public interface UserService {
     WebUserInfoModel setUserInfoByUserName(WebUserInfoModel webUserInfoModel, String username);
 
     User getCurrentUser();
+
+    void deleteUser(Long userId);
+
 }
