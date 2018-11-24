@@ -3,17 +3,11 @@ package com.accenture.SmartOffice.service.impl;
 import com.accenture.SmartOffice.customException.ObjectNotFoundExeption;
 import com.accenture.SmartOffice.customException.UserAlreadyExistsException;
 import com.accenture.SmartOffice.dao.entity.User;
-import com.accenture.SmartOffice.dao.entity.UserInfo;
-import com.accenture.SmartOffice.dao.repository.UserInfoRepository;
 import com.accenture.SmartOffice.dao.repository.UserRepository;
-import com.accenture.SmartOffice.model.IdentityDocument;
 import com.accenture.SmartOffice.model.web.WebUserModel;
 import org.dozer.DozerBeanMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -34,9 +28,6 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserRepository userRepository;
-
-    @Autowired
-    private UserInfoRepository userInfoRepository;
 
     @Override
     public WebUserModel signUp(WebUserCredentialModel webRegisterUserModel) {
@@ -65,65 +56,20 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public WebUserInfoModel getUserInfoByUserName(String username) {
-        if (!StringUtils.hasText(username)) {
-            throw new IllegalArgumentException("Incorrect user username!");
-        }
-
-        User user = userRepository.findByUserName(username);
-        UserInfo userInfo = user.getUserInfo();
-        if (userInfo != null) {
-            return convertUserInfoToWebUserInfoModel(userInfo);
-        }
-        return null;
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public WebUserInfoModel setUserInfoByUserName(WebUserInfoModel webUserInfoModel, String username) {
-        if (!StringUtils.hasText(username)) {
-            throw new IllegalArgumentException("Incorrect user username!");
-        }
-
-        User user = userRepository.findByUserName(username);
-        UserInfo userInfo = convertWebUserInfoModelToUserInfo(webUserInfoModel);
-        userInfo.setUser(user);
-        if(user.getUserInfo() != null) {
-            userInfo.setId(user.getUserInfo().getId());
-        }
-        userInfo = userInfoRepository.save(userInfo);
-        return convertUserInfoToWebUserInfoModel(userInfo);
+        throw new UnsupportedOperationException();
     }
 
-    private WebUserInfoModel convertUserInfoToWebUserInfoModel(UserInfo userInfo) {
-        WebUserInfoModel webUserInfoModel = new WebUserInfoModel();
-        webUserInfoModel.setFirstName(userInfo.getFirstName());
-        webUserInfoModel.setLastName(userInfo.getLastName());
-        webUserInfoModel.setMiddleName(userInfo.getMiddleName());
-
-        IdentityDocument identityDocument = new IdentityDocument();
-        identityDocument.setDocumentType(userInfo.getDocumentType());
-        identityDocument.setNumber(userInfo.getNumber());
-        identityDocument.setSerial(userInfo.getSerial());
-        identityDocument.setIssueDate(userInfo.getIssueDate());
-        identityDocument.setIssuerCode(userInfo.getIssuerCode());
-        identityDocument.setIssuer(userInfo.getIssuer());
-        webUserInfoModel.setIdentityDocument(identityDocument);
-        return webUserInfoModel;
+    private WebUserInfoModel convertUserInfoToWebUserInfoModel(User user) {
+        throw new UnsupportedOperationException();
     }
 
-    private UserInfo convertWebUserInfoModelToUserInfo(WebUserInfoModel webUserInfoModel) {
-        UserInfo userInfo = new UserInfo();
-        userInfo.setFirstName(webUserInfoModel.getFirstName());
-        userInfo.setLastName(webUserInfoModel.getLastName());
-        userInfo.setMiddleName(webUserInfoModel.getMiddleName());
-        if (webUserInfoModel.getIdentityDocument() != null) {
-            userInfo.setDocumentType(webUserInfoModel.getIdentityDocument().getDocumentType());
-            userInfo.setNumber(webUserInfoModel.getIdentityDocument().getNumber());
-            userInfo.setSerial(webUserInfoModel.getIdentityDocument().getSerial());
-            userInfo.setIssueDate(webUserInfoModel.getIdentityDocument().getIssueDate());
-            userInfo.setIssuer(webUserInfoModel.getIdentityDocument().getIssuer());
-            userInfo.setIssuerCode(webUserInfoModel.getIdentityDocument().getIssuerCode());
-        }
-        return userInfo;
+    private User convertWebUserInfoModelToUserInfo(WebUserInfoModel webUserInfoModel) {
+        throw new UnsupportedOperationException();
     }
 
     @Override

@@ -1,18 +1,14 @@
 package com.accenture.SmartOffice.dao.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "users")
-@JsonIgnoreProperties(value = {"createdAt", "updatedAt"},
-        allowGetters = true)
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,31 +21,51 @@ public class User {
     @NotNull
     private String hashPassword;
 
+    @NotNull
     private String email;
 
-    @Column(name = "IS_LOCK", columnDefinition = "boolean default false", nullable = false)
-    private Boolean isLock = false;
+    @Column(name = "first_name")
+    @NotNull
+    private String firstName;
 
-    private String refreshToken;
+    @Column(name = "last_name")
+    @NotNull
+    private String lastName;
 
-    @Column(nullable = false, updatable = false)
-    @Temporal(TemporalType.TIMESTAMP)
-    @CreatedDate
-    private Date createdAt = new Date();
+    @Column(name = "middle_name")
+    private String middleName;
 
-    @Column(nullable = false)
-    @Temporal(TemporalType.TIMESTAMP)
-    @LastModifiedDate
-    private Date updatedAt = new Date();
+    @Column(name = "image_url")
+    private String imageUrl;
+
+    @Column(name = "mobile_number")
+    private String mobileNumber;
+
+    @Column(name = "current_level")
+    private Integer currentLevel;
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    private List<WorkSpace> workSpaces;
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    private List<MeetingUser> meetingUsers;
+
+    @OneToMany(mappedBy = "owner", fetch = FetchType.LAZY)
+    private List<Meeting> meetings;
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    private List<ProjectJoiner> joiner;
 
     @OneToOne(mappedBy = "user", fetch = FetchType.LAZY)
-    private UserInfo userInfo;
+    private Capability capability;
 
-    @OneToMany(mappedBy = "owner", fetch = FetchType.LAZY)
-    private List<Apartment> apartments;
-
-    @OneToMany(mappedBy = "owner", fetch = FetchType.LAZY)
-    private List<AccountingDevice> accountingDevices;
+    @ManyToMany(cascade = {CascadeType.ALL})
+    @JoinTable(
+            name = "user_roles",
+            joinColumns = {@JoinColumn(name = "user_id")},
+            inverseJoinColumns = {@JoinColumn(name = "role_id")}
+    )
+    private Set<Role> roles = new HashSet<>();
 
     public Long getId() {
         return id;
@@ -83,59 +99,101 @@ public class User {
         this.email = email;
     }
 
-    public Boolean getLock() {
-        return isLock;
+    public List<WorkSpace> getWorkSpaces() {
+        return workSpaces;
     }
 
-    public void setLock(Boolean lock) {
-        isLock = lock;
+    public void setWorkSpaces(List<WorkSpace> workSpaces) {
+        this.workSpaces = workSpaces;
     }
 
-    public String getRefreshToken() {
-        return refreshToken;
+    @NotNull
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setRefreshToken(String refreshToken) {
-        this.refreshToken = refreshToken;
+    public void setFirstName(@NotNull String firstName) {
+        this.firstName = firstName;
     }
 
-    public Date getCreatedAt() {
-        return createdAt;
+    @NotNull
+    public String getLastName() {
+        return lastName;
     }
 
-    public void setCreatedAt(Date createdAt) {
-        this.createdAt = createdAt;
+    public void setLastName(@NotNull String lastName) {
+        this.lastName = lastName;
     }
 
-    public Date getUpdatedAt() {
-        return updatedAt;
+    public String getMiddleName() {
+        return middleName;
     }
 
-    public void setUpdatedAt(Date updatedAt) {
-        this.updatedAt = updatedAt;
+    public void setMiddleName(String middleName) {
+        this.middleName = middleName;
     }
 
-    public UserInfo getUserInfo() {
-        return userInfo;
+    public String getImageUrl() {
+        return imageUrl;
     }
 
-    public void setUserInfo(UserInfo userInfo) {
-        this.userInfo = userInfo;
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 
-    public List<Apartment> getApartments() {
-        return apartments;
+    public String getMobileNumber() {
+        return mobileNumber;
     }
 
-    public void setApartments(List<Apartment> apartments) {
-        this.apartments = apartments;
+    public void setMobileNumber(String mobileNumber) {
+        this.mobileNumber = mobileNumber;
     }
 
-    public List<AccountingDevice> getAccountingDevices() {
-        return accountingDevices;
+    public Integer getCurrentLevel() {
+        return currentLevel;
     }
 
-    public void setAccountingDevices(List<AccountingDevice> accountingDevices) {
-        this.accountingDevices = accountingDevices;
+    public void setCurrentLevel(Integer currentLevel) {
+        this.currentLevel = currentLevel;
+    }
+
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
+    }
+
+    public List<MeetingUser> getMeetingUsers() {
+        return meetingUsers;
+    }
+
+    public void setMeetingUsers(List<MeetingUser> meetingUsers) {
+        this.meetingUsers = meetingUsers;
+    }
+
+    public List<Meeting> getMeetings() {
+        return meetings;
+    }
+
+    public void setMeetings(List<Meeting> meetings) {
+        this.meetings = meetings;
+    }
+
+    public Capability getCapability() {
+        return capability;
+    }
+
+    public void setCapability(Capability capability) {
+        this.capability = capability;
+    }
+
+    public List<ProjectJoiner> getJoiner() {
+        return joiner;
+    }
+
+    public void setJoiner(List<ProjectJoiner> joiner) {
+        this.joiner = joiner;
     }
 }
