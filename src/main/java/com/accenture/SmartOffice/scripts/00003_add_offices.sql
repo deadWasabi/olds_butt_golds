@@ -1,0 +1,1 @@
+insert into offices values (1, 'old office', '2nd floor');
