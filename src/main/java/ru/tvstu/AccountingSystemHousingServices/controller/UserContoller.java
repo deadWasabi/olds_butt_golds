@@ -15,24 +15,33 @@ public class UserContoller {
     @Autowired
     private UserService userService;
 
-    private static final String  SIGN_UP_PATH = "/sign-up";
-    private static final String USER_INFO_PATH = "/userInfo";
+    private static final String SIGN_UP = "/sign-up";
+    private static final String GET_USER_INFO = "/userInfo";
+    private static final String SET_USER_INFO = "/setUserInfo";
+    private static final String DELETE_USER = "/deleteUser";
 
     @ResponseBody
-    @RequestMapping(value = SIGN_UP_PATH, method = RequestMethod.POST)
+    @PostMapping(value = SIGN_UP)
     public WebUserModel signUp(@RequestBody WebUserCredentialModel webUserCredentialModel) {
         return userService.signUp(webUserCredentialModel);
     }
 
     @ResponseBody
-    @RequestMapping(value = USER_INFO_PATH, method = RequestMethod.POST)
+    @PostMapping(value = SET_USER_INFO)
     public WebUserInfoModel setUserInfo(@RequestBody WebUserInfoModel webUserInfoModel) {
         return userService.setUserInfoByUserName(webUserInfoModel, SecurityContextHolder.getContext().getAuthentication().getName());
     }
 
     @ResponseBody
-    @RequestMapping(value = USER_INFO_PATH, method = RequestMethod.GET)
+    @GetMapping(value = GET_USER_INFO)
     public WebUserInfoModel getUserInfo() {
         return userService.getUserInfoByUserName(SecurityContextHolder.getContext().getAuthentication().getName());
+    }
+
+    @ResponseBody
+    @GetMapping(value = DELETE_USER)
+    public WebUserInfoModel deleteUser(@RequestBody WebUserInfoModel webUserInfoModel) {
+        //TODO
+        throw new UnsupportedOperationException();
     }
 }
