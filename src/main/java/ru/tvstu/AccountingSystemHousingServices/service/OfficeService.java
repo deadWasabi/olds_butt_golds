@@ -1,4 +1,0 @@
-package ru.tvstu.AccountingSystemHousingServices.service;
-
-public interface OfficeService {
-}
