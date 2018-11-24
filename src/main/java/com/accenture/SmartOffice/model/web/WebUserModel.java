@@ -11,6 +11,8 @@ public class WebUserModel {
     private String firstName;
     private String lastName;
     private String middleName;
+    private Integer level;
+    private String mobileNumber;
 
     public WebUserModel() {
     }
@@ -53,5 +55,21 @@ public class WebUserModel {
 
     public void setMiddleName(String middleName) {
         this.middleName = middleName;
+    }
+
+    public Integer getLevel() {
+        return level;
+    }
+
+    public void setLevel(Integer level) {
+        this.level = level;
+    }
+
+    public String getMobileNumber() {
+        return mobileNumber;
+    }
+
+    public void setMobileNumber(String mobileNumber) {
+        this.mobileNumber = mobileNumber;
     }
 }
