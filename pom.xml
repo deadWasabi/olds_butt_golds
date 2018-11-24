@@ -9,6 +9,23 @@
 
 	<name>AccountingSystemHousingServices</name>
 
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.flywaydb</groupId>
+				<artifactId>flyway-maven-plugin</artifactId>
+				<version>5.2.1</version>
+				<configuration>
+					<url>jdbc:h2:tcp://localhost/~/SmartOffice</url>
+					<user>sa</user>
+					<locations>
+						<location>filesystem:src/main/resources/db/migration</location>
+					</locations>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
