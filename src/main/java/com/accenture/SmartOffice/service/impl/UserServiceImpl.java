@@ -7,8 +7,6 @@ import com.accenture.SmartOffice.dao.repository.UserRepository;
 import com.accenture.SmartOffice.model.web.WebUserModel;
 import org.dozer.DozerBeanMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import com.accenture.SmartOffice.model.web.WebUserCredentialModel;
@@ -20,8 +18,8 @@ import static java.util.Collections.emptyList;
 @Service
 public class UserServiceImpl implements UserService {
 
-    @Autowired
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
+    //@Autowired
+    //private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
     private DozerBeanMapper mapper;
@@ -39,12 +37,11 @@ public class UserServiceImpl implements UserService {
             throw new IllegalArgumentException("Incorrect user password!");
         }
 
-        if (userRepository.findByUserName(webRegisterUserModel.getUsername()) == null) {
+        if (userRepository.findByLoginAndHashPassword(webRegisterUserModel.getUsername(), webRegisterUserModel.getPassword()) == null) {
             User newUser = new User();
             newUser.setLogin(webRegisterUserModel.getUsername());
-            newUser.setHashPassword(bCryptPasswordEncoder.encode(webRegisterUserModel.getPassword()));
+            //newUser.setHashPassword(bCryptPasswordEncoder.encode(webRegisterUserModel.getPassword()));
             newUser.setEmail(webRegisterUserModel.getEmail());
-            newUser = userRepository.save(newUser);
             WebUserModel webUserModel = new WebUserModel();
             webUserModel.setUsername(newUser.getLogin());
             webUserModel.setEmail(newUser.getEmail());
@@ -52,6 +49,20 @@ public class UserServiceImpl implements UserService {
         } else {
             throw new UserAlreadyExistsException("User already registered!");
         }
+    }
+
+    @Override
+    public WebUserModel login(WebUserCredentialModel webRegisterUserModel) {
+        if (!StringUtils.hasText(webRegisterUserModel.getUsername()) || !StringUtils.hasText(webRegisterUserModel.getPassword())) {
+            throw new IllegalArgumentException("Incorrect username or password!");
+        }
+        User user = userRepository.findByLoginAndHashPassword(webRegisterUserModel.getUsername(), webRegisterUserModel.getPassword());
+        if (user == null) {
+            throw new IllegalArgumentException("Incorrect username or password!");
+        }
+        WebUserModel webUserModel = new WebUserModel();
+        mapper.map(user, webUserModel);
+        return webUserModel;
     }
 
     @Override
@@ -70,15 +81,6 @@ public class UserServiceImpl implements UserService {
 
     private User convertWebUserInfoModelToUserInfo(WebUserInfoModel webUserInfoModel) {
         throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public User getCurrentUser() {
-        String userName = SecurityContextHolder.getContext().getAuthentication().getName();
-        if(userName  == null) {
-            throw new ObjectNotFoundExeption("User not found");
-        }
-        return userRepository.findByUserName(userName);
     }
 
     @Override

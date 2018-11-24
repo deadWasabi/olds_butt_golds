@@ -56,7 +56,8 @@ public class User {
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<ProjectJoiner> joiner;
 
-    @OneToOne(mappedBy = "user", fetch = FetchType.LAZY)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "capability_id")
     private Capability capability;
 
     @ManyToMany(cascade = {CascadeType.ALL})

@@ -1,12 +1,10 @@
 package com.accenture.SmartOffice.dao.entity;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -23,8 +21,7 @@ public class Capability {
 
     private String description;
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @MapsId
+    @OneToOne(mappedBy = "capability", fetch = FetchType.LAZY)
     private User user;
 
     @NotNull

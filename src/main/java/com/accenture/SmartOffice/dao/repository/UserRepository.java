@@ -7,6 +7,7 @@ import com.accenture.SmartOffice.dao.entity.User;
 
 public interface UserRepository extends JpaRepository<User, Long> {
 
-    @Query("SELECT p FROM User p WHERE LOWER(p.login) = LOWER(:userName)")
-    User findByUserName(@Param("userName") String userName);
+    User findByLoginAndHashPassword(@Param("login") String userName, @Param("hashPassword") String hashPassword);
+
+    User findByLogin(@Param("login") String userName);
 }

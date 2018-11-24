@@ -8,11 +8,11 @@ import com.accenture.SmartOffice.model.web.WebUserInfoModel;
 public interface UserService {
     WebUserModel signUp(WebUserCredentialModel webRegisterUserModel);
 
+    WebUserModel login(WebUserCredentialModel webRegisterUserModel);
+
     WebUserInfoModel getUserInfoByUserName(String username);
 
     WebUserInfoModel setUserInfoByUserName(WebUserInfoModel webUserInfoModel, String username);
-
-    User getCurrentUser();
 
     void deleteUser(Long userId);
 
