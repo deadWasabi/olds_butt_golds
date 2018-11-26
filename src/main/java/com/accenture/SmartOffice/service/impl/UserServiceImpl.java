@@ -66,8 +66,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public WebUserInfoModel getUserInfoByUserName(String username) {
-        throw new UnsupportedOperationException();
+    public WebUserModel getUserInfoByUserId(Long id) {
+        return convertUserInfoToWebUserInfoModel(userRepository.findById(id));
     }
 
     @Override
@@ -75,16 +75,25 @@ public class UserServiceImpl implements UserService {
         throw new UnsupportedOperationException();
     }
 
-    private WebUserInfoModel convertUserInfoToWebUserInfoModel(User user) {
-        throw new UnsupportedOperationException();
+    @Override
+    public void deleteUser(Long id){
+        userRepository.delete(id);
+    }
+
+    private WebUserModel convertUserInfoToWebUserInfoModel(User user) {
+        WebUserModel webUserModel = new WebUserModel();
+        webUserModel.setFirstName(user.getFirstName());
+        webUserModel.setLastName(user.getLastName());
+        webUserModel.setMiddleName(user.getMiddleName());
+        webUserModel.setUsername(user.getLogin());
+        webUserModel.setEmail(user.getEmail());
+        webUserModel.setLevel(user.getCurrentLevel());
+        webUserModel.setMobileNumber(user.getMobileNumber());
+        return webUserModel;
     }
 
     private User convertWebUserInfoModelToUserInfo(WebUserInfoModel webUserInfoModel) {
         throw new UnsupportedOperationException();
     }
 
-    @Override
-    public void deleteUser(Long userId){
-        //TODO
-    }
 }

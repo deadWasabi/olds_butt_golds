@@ -1,6 +1,5 @@
 package com.accenture.SmartOffice.service;
 
-import com.accenture.SmartOffice.dao.entity.User;
 import com.accenture.SmartOffice.model.web.WebUserModel;
 import com.accenture.SmartOffice.model.web.WebUserCredentialModel;
 import com.accenture.SmartOffice.model.web.WebUserInfoModel;
@@ -10,7 +9,7 @@ public interface UserService {
 
     WebUserModel login(WebUserCredentialModel webRegisterUserModel);
 
-    WebUserInfoModel getUserInfoByUserName(String username);
+    WebUserModel getUserInfoByUserId(Long userId);
 
     WebUserInfoModel setUserInfoByUserName(WebUserInfoModel webUserInfoModel, String username);
 
