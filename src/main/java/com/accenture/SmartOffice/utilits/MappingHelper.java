@@ -17,9 +17,7 @@ public class MappingHelper {
         }
 
         ArrayList<D> arrayList = new ArrayList<>();
-        for (S s : sourceList) {
-            arrayList.add(dozerBeanMapper.map(s, dClass));
-        }
+        sourceList.forEach( s -> arrayList.add(dozerBeanMapper.map(s, dClass)));
         return arrayList;
     }
 }

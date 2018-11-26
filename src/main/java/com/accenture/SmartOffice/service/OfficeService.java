@@ -1,16 +1,20 @@
 package com.accenture.SmartOffice.service;
 
-import com.accenture.SmartOffice.model.web.WebOfficeModel;
+import com.accenture.SmartOffice.model.web.WebOfficeModelViewModel;
 import com.accenture.SmartOffice.model.web.WebUserSwapModel;
-import com.accenture.SmartOffice.model.web.WebUserWorkspaceModel;
+import com.accenture.SmartOffice.model.web.WebWorkspaceModel;
+
+import java.util.List;
 
 public interface OfficeService {
 
-    WebOfficeModel getOfficeDetail();
+    WebOfficeModelViewModel getOfficeDetail(Long id);
 
-    void setUserWorkspace(WebUserWorkspaceModel webUserWorkspaceModel);
+    void setUserWorkspace(WebWorkspaceModel webWorkspaceModel);
 
     void deleteUserWorkspace(Long userWorkspaceId);
 
     void swapUsers(WebUserSwapModel webUserSwapModel);
+
+    List<WebOfficeModelViewModel> getOffices();
 }

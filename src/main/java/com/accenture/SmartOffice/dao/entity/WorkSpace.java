@@ -18,7 +18,6 @@ public class WorkSpace {
     @Column(name = "y_position")
     private Integer yPosition;
 
-    @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
@@ -59,7 +58,7 @@ public class WorkSpace {
         return user;
     }
 
-    public void setUser(@NotNull User user) {
+    public void setUser(User user) {
         this.user = user;
     }
 

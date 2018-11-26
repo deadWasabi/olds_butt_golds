@@ -1,12 +1,15 @@
 package com.accenture.SmartOffice.model.web;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 import java.io.Serializable;
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class WebUserSwapModel implements Serializable {
 
-    Long firstUserId;
+    private Long firstUserId;
 
-    Long secondUserId;
+    private Long secondUserId;
 
     public Long getFirstUserId() {
         return firstUserId;
